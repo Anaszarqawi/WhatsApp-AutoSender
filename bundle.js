@@ -8911,13 +8911,9 @@ module.exports = function whichTypedArray(value) {
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"available-typed-arrays":1,"call-bind/callBound":5,"es-abstract/helpers/getOwnPropertyDescriptor":7,"foreach":9,"has-tostringtag/shams":15,"is-typed-array":22}],48:[function(require,module,exports){
 module.exports={
-    "messages":[
+    "msgs":[
         "Sweet Dreams",
-        "Good Morning",
-        "Yep",
-        "Check RTS",
-        "Done",
-        "Anas"
+        "Good Morning"
     ]
 }
 },{}],49:[function(require,module,exports){
@@ -34316,34 +34312,42 @@ function extend() {
 
 },{"./has-keys":160}],162:[function(require,module,exports){
 const fs = require('browserify-fs');
+// const fs = require('fs');
 const $ = require('jquery');
 const msgsFile = require('./messages.json');
 
-var msgsContainer = $("#messages")
+var msgsContainer = $("#messages");
 
-let refreshMsgs = async () => {
-    msgsFile.messages.forEach(msg => {
+(async () => {
+    msgsFile.msgs.forEach(msg => {
         msgsContainer.append(`<div class="message">${msg}</div>`)
     });
-};
+})();
 
-refreshMsgs()
+let jsonGenerator = (newMsg) => {
+    let messages = msgsFile.msgs;
+    messages.push(newMsg);
+    let jsonStr = '{"msgs":[';
+    messages.forEach(element => {
+        jsonStr += `"${element}",`;
+    });
+    jsonStr = jsonStr.slice(0, -1);
+    jsonStr += ']}';
+
+    return jsonStr
+}
 
 $('.add-btn').click(() => {
     let msg = $(".message-input").val()
     $(".message-input").val("")
-    // msgsFile.messages.push(msg)
     msgsContainer.append(`<div class="message">${msg}</div>`)
-    fs.writeFile(msgsFile.messages, JSON.stringify(msg) , function (err) {
-        if (err) throw err;
-        fs.readFile("messages.json", function (err,data) { 
-            console.log(data);
-        })
-    });
-})
 
-// fs.writeFile("./customer.json", JSON.stringify(customer), err => {
-//     if (err) console.log("Error writing file:", err);
-//   });
+    let json = jsonGenerator(msg)
+    // fs.writeFile("messages.json", json, 'utf8', (error) => {
+        //     console.log(error);
+        // });
+    fs.writeFile("messages.json", json.toString())
+    console.log(msgsFile.msgs);
+})
 
 },{"./messages.json":48,"browserify-fs":62,"jquery":87}]},{},[162]);

@@ -1,26 +1,36 @@
 const fs = require('browserify-fs');
+// const fs = require('fs');
 const $ = require('jquery');
 const msgsFile = require('./messages.json');
 
-var msgsContainer = $("#messages")
+var msgsContainer = $("#messages");
 
-let refreshMsgs = async () => {
-    msgsFile.messages.forEach(msg => {
+(async () => {
+    msgsFile.msgs.forEach(msg => {
         msgsContainer.append(`<div class="message">${msg}</div>`)
     });
-};
+})();
 
-refreshMsgs()
+let jsonGenerator = (newMsg) => {
+    let messages = msgsFile.msgs;
+    messages.push(newMsg);
+    let jsonStr = '{"msgs":[';
+    messages.forEach(element => {
+        jsonStr += `"${element}",`;
+    });
+    jsonStr = jsonStr.slice(0, -1);
+    jsonStr += ']}';
+
+    return jsonStr
+}
 
 $('.add-btn').click(() => {
     let msg = $(".message-input").val()
     $(".message-input").val("")
-    // msgsFile.messages.push(msg)
     msgsContainer.append(`<div class="message">${msg}</div>`)
-    fs.writeFile(msgsFile.messages, JSON.stringify(msg) , function (err) {
-        if (err) throw err;
-        fs.readFile("messages.json", function (err,data) { 
-            console.log(data);
-        })
-    });
+
+    let json = jsonGenerator(msg)
+
+    fs.writeFile("messages.json", json.toString())
+    console.log(msgsFile.msgs);
 })
