@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "browserify-fs": "^1.0.0",
+    "fs": "^0.0.1-security",
+    "fs-web": "^1.0.1",
+    "jquery": "^3.6.0"
+  },
+  "name": "whatsapp-autosender",
+  "description": "",
+  "version": "1.0.0",
+  "main": "script.js",
+  "scripts": {
+    "build": "browserify script.js -o bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anaszarqawi/WhatsApp-AutoSender.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Anaszarqawi/WhatsApp-AutoSender/issues"
+  },
+  "homepage": "https://github.com/Anaszarqawi/WhatsApp-AutoSender#readme"
+}
