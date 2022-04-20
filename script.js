@@ -1,12 +1,26 @@
-import msgsFile from './messages.json' assert { type: "json" };
+const fs = require('browserify-fs');
+const $ = require('jquery');
+const msgsFile = require('./messages.json');
 
-let messages = msgsFile.messages
-var msgsContainer = document.getElementById("messages")
+var msgsContainer = $("#messages")
 
-let addMsg = (msg) => {
-    msgsContainer.innerHTML += `<div class="message">${msg}</div>`
-}
+let refreshMsgs = async () => {
+    msgsFile.messages.forEach(msg => {
+        msgsContainer.append(`<div class="message">${msg}</div>`)
+    });
+};
 
-messages.forEach(msg => {
-    addMsg(msg)
-});
+refreshMsgs()
+
+$('.add-btn').click(() => {
+    let msg = $(".message-input").val()
+    $(".message-input").val("")
+    // msgsFile.messages.push(msg)
+    msgsContainer.append(`<div class="message">${msg}</div>`)
+    fs.writeFile(msgsFile.messages, JSON.stringify(msg) , function (err) {
+        if (err) throw err;
+        fs.readFile("messages.json", function (err,data) { 
+            console.log(data);
+        })
+    });
+})

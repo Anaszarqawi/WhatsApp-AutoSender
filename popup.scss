@@ -24,6 +24,7 @@ body {
         padding: 5px;
         text-align: left;
         width: auto;
+        color: #28a885;
     }
 
 
@@ -55,20 +56,48 @@ body {
 
     }
 
-    .message-input {
+    .inputArea {
+        display: flex;
+        flex-direction: row;
         box-sizing: border-box;
-        padding: 5px;
-        border: 1px #0000002c solid;
-        border-radius: 2px;
-        width: auto;
-        margin-top: 10px;
-        outline: none;
-        transition: all 0.1s;
 
-        &:focus {
-            border-color: #00000086;
+        .add-btn {
+            border-radius: 2px;
+            width: auto;
+            margin-top: 10px;
+            transition: all 0.1s;
+            outline: none;
+            border: 1px #0000002c solid;
+            margin-left: 10px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #0000001f;
+            }
+
+            &:active {
+                background-color: #0000002d;
+
+            }
+        }
+
+
+        .message-input {
+            box-sizing: border-box;
+            padding: 5px;
+            border: 1px #0000002c solid;
+            border-radius: 2px;
+            width: auto;
+            margin-top: 10px;
+            outline: none;
+            transition: all 0.1s;
+
+            &:focus {
+                border-color: #00000086;
+            }
         }
     }
+
 
 
 }
